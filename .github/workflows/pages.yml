@@ -19,7 +19,7 @@ jobs:
       with:
         repository: DannyGooo/yonghuiliu-dev
         ref: main
-        ssh-key: ${{ secrets.SSH_KEY }}
+        token: ${{ secrets.SSH_KEY }}
 
         
     - name: Use Node.js ${{ matrix.node-version }}
