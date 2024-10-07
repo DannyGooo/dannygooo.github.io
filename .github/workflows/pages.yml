@@ -19,5 +19,5 @@ jobs:
       with:
         repository: DannyGooo/yonghuiliu-dev
         ref: main
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.SSH_KEY }}
         
