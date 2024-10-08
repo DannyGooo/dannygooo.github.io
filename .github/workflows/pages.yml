@@ -35,6 +35,13 @@ jobs:
         sed -i 's/BrowserRouter/HashRouter/g' src/index.js
     - run: npm run build --if-present
     
+    - name: List current directory
+      run: ls -la
+
+    - name: List build directory
+      run: ls -la build/
+
+    
     - name: Upload GitHub Pages artifact
       uses: actions/upload-pages-artifact@v1.0.3
       with:
