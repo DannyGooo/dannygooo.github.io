@@ -15,7 +15,7 @@ jobs:
         node-version: [14.x]
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         repository: DannyGooo/yonghuiliu-dev
         ref: main
@@ -23,7 +23,7 @@ jobs:
 
         
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
@@ -43,8 +43,8 @@ jobs:
 
     
     - name: Upload GitHub Pages artifact      
-      # uses: actions/upload-pages-artifact@v1
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-pages-artifact@v2
+      # uses: actions/upload-artifact@v4
       with:
         path: build/
         name: github-pages
@@ -62,7 +62,7 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v1
+        uses: actions/deploy-pages@v2
         with:
           artifact_name: github-pages
         
