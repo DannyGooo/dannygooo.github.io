@@ -50,7 +50,7 @@ jobs:
 
     - name: Package artifact without symlinks
       run: |
-        tar --dereference -cf artifact.tar your_build_directory/
+        tar --dereference -cf artifact.tar build/
         gzip -n artifact.tar  # produces artifact.tar.gz
     - name: Upload packaged artifact
       uses: actions/upload-artifact@v4
@@ -69,21 +69,40 @@ jobs:
       name: github-pages
       
     steps:
+      # - name: Download artifact
+      #   uses: actions/download-artifact@v4
+      #   with:
+      #     name: github-pages
+      #     path: ./build
+    
+      # - name: List current directory
+      #   run: ls 
+
+      # - name: List build directory
+      #   run: ls -la build/
+      
+      # - name: Deploy to GitHub Pages
+      #   id: deployment
+      #   uses: actions/deploy-pages@v4
+      #   with:
+      #     artifact_name: github-pages
+
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
           name: github-pages
           path: ./build
-    
-      - name: List current directory
-        run: ls 
 
-      - name: List build directory
-        run: ls -la build/
+      - name: Extract archive
+        run: |
+          tar xzf artifact.tar.gz
+          rm artifact.tar.gz  # Remove the archive after extraction
       
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+  
       - name: Deploy to GitHub Pages
-        id: deployment
         uses: actions/deploy-pages@v4
         with:
-          artifact_name: github-pages
+          path: './build'
   
