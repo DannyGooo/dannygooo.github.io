@@ -48,14 +48,15 @@ jobs:
     #     name: github-pages
     #     path: build/
 
-    - name: Upload Artifact (No Symlinks)
+    - name: Package artifact without symlinks
+      run: |
+        tar --dereference -cf artifact.tar your_build_directory/
+        gzip -n artifact.tar  # produces artifact.tar.gz
+    - name: Upload packaged artifact
       uses: actions/upload-artifact@v4
       with:
         name: github-pages
-        path: ./build  # Your build directory
-        follow-symbolic-links: false  # Ignore symbolic links
-        process-globstar: false       # Avoid glob patterns resolving links
-        if-no-files-found: error      # Fail if no files (optional)
+        path: artifact.tar.gz
 
   deploy:
     runs-on: ubuntu-latest
