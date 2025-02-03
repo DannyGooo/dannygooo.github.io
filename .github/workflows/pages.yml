@@ -34,19 +34,6 @@ jobs:
         sed -i 's#"homepage": "/"#"homepage": "https://dannygooo.github.io/"#' package.json
         
     - run: npm run build --if-present
-    
-    - name: List current directory
-      run: ls -la
-
-    - name: List build directory
-      run: ls -la build/
-  
-    # - name: Upload GitHub Pages artifact      
-    #   # uses: actions/upload-artifact@v4
-    #   uses: actions/upload-pages-artifact@v1
-    #   with:
-    #     name: github-pages
-    #     path: build/
 
     - name: Package artifact without symlinks
       run: |
@@ -70,7 +57,6 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: github-pages
-        # path: artifact.tar.gz
         path: mybuild/
 
   deploy:
@@ -82,8 +68,14 @@ jobs:
       id-token: write
     environment:
       name: github-pages
-      
+
     steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
+        with:
+          artifact_name: github-pages
+    # steps:
       # - name: Download artifact
       #   uses: actions/download-artifact@v4
       #   with:
@@ -116,9 +108,5 @@ jobs:
       # - name: Deploy to GitHub Pages
       #   uses: actions/deploy-pages@v4
 
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-        with:
-          artifact_name: github-pages
+      
   
