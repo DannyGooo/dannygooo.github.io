@@ -68,7 +68,7 @@ jobs:
       - name: List downloaded artifact
         run: |
           echo "Files in downloaded artifact folder:"
-          ls -la github-pages
+          ls -la 
       
       - name: Deploy to GitHub Pages
         id: deployment
