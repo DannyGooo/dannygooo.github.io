@@ -58,6 +58,12 @@ jobs:
       name: github-pages
       
     steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: github-pages
+          path: ./build
+    
       - name: List current directory
         run: ls 
         
