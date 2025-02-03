@@ -52,6 +52,9 @@ jobs:
       run: |
         tar --dereference -cf artifact.tar build/
         gzip -n artifact.tar  # produces artifact.tar.gz
+        mkdir mybuild
+        tar xzf artifact.tar.gz -C mybuild
+
     
     - name: List current directory
       run: ls -la
@@ -59,12 +62,16 @@ jobs:
     - name: List build directory
       run: ls -la build/
     
+    - name: List build directory
+      run: ls -la mybuild/
+    
     
     - name: Upload packaged artifact
       uses: actions/upload-artifact@v4
       with:
         name: github-pages
-        path: artifact.tar.gz
+        # path: artifact.tar.gz
+        path: mybuild/
 
   deploy:
     runs-on: ubuntu-latest
@@ -77,41 +84,41 @@ jobs:
       name: github-pages
       
     steps:
-      - name: Download artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: github-pages
-          path: .
+      # - name: Download artifact
+      #   uses: actions/download-artifact@v4
+      #   with:
+      #     name: github-pages
+      #     path: .
       
-      - name: List current directory
-        run: ls -la
+      # - name: List current directory
+      #   run: ls -la
     
 
-      - name: Extract archive
-        run: |
-          tar xzf artifact.tar.gz
-          rm artifact.tar.gz  # Remove the archive after extraction
+      # # - name: Extract archive
+      # #   run: |
+      # #     tar xzf artifact.tar.gz
+      # #     rm artifact.tar.gz  # Remove the archive after extraction
 
-      - name: List current directory
-        run: ls -la
+      # - name: List current directory
+      #   run: ls -la
   
-      - name: List build directory
-        run: ls -la build/
+      # - name: List build directory
+      #   run: ls -la build/
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
+      # - name: Setup Pages
+      #   uses: actions/configure-pages@v4
 
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: 'build/'  
-
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v4
+      # - name: Upload Pages artifact
+      #   uses: actions/upload-pages-artifact@v3
+      #   with:
+      #     path: 'build/'  
 
       # - name: Deploy to GitHub Pages
-      #   id: deployment
       #   uses: actions/deploy-pages@v4
-      #   with:
-      #     artifact_name: github-pages
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+        with:
+          artifact_name: github-pages
   
