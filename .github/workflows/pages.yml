@@ -102,7 +102,10 @@ jobs:
           path: .
       
       - name: List current directory
-        run: ls 
+        run: ls -la
+    
+      # - name: List build directory
+      #   run: ls -la build/
 
       - name: Extract archive
         run: |
@@ -110,10 +113,13 @@ jobs:
           rm artifact.tar.gz  # Remove the archive after extraction
 
       - name: List current directory
-        run: ls 
+        run: ls -la
+  
+      - name: List build directory
+        run: ls -la build/
         
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
+      # - name: Setup Pages
+      #   uses: actions/configure-pages@v4
   
       # - name: Deploy to GitHub Pages
       #   uses: actions/deploy-pages@v4
